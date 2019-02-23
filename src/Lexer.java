@@ -4,11 +4,15 @@ public class Lexer {
     private char[] programafonte;
     private int i;
 
+    private TabelaSimbolos tabelaSimbolos;
+
     public int getI() {
         return i;
     }
 
     public Lexer(char[] programa) {
+        tabelaSimbolos = new TabelaSimbolos();
+
         programafonte = programa;
         init();
     }
@@ -57,7 +61,7 @@ public class Lexer {
             if(palavraReservada.isPalavraReservada(lexema.toString())){
                 token = "<"+lexema.toString()+", " + lexema.toString() + ">";
             }else {
-                token = "<ID, " + lexema.toString() + ">";
+                token = "<ID, " + tabelaSimbolos.getIdSimbolo(lexema.toString()) + ">";
             }
 
             return token;
@@ -66,14 +70,3 @@ public class Lexer {
         return token;
     }
 }
-//como resolver palavra reservada?
-    //poderia ter uma lista com palavras reservadas
-    //switch
-    //dentro do identificador apos while por meio de função
-    //<INT>
-
-//tabela de simbolos
-    //inserir o identificador(ID) na tabela<ID,1>
-    //consulta se ja existe
-
-//operadores
