@@ -1,8 +1,17 @@
+import java.util.Arrays;
+
 public class Lexer {
 
     private char peek;
     private char[] programafonte;
     private int i;
+
+    private String[] InicioOperadores = {
+            "+","-",
+            "*","/",
+            ">","<",
+            "=","!"
+    };
 
     private TabelaSimbolos tabelaSimbolos;
 
@@ -66,6 +75,31 @@ public class Lexer {
 
             return token;
         }
+
+        //Operador
+        if (Arrays.stream(InicioOperadores).anyMatch(Character.toString(peek)::equals)) {
+            StringBuilder lexema = new StringBuilder();
+            lexema.append(peek);
+            if(Character.toString(peek).equals("=") ||
+                Character.toString(peek).equals("!") ||
+                Character.toString(peek).equals(">") ||
+                Character.toString(peek).equals("<")
+            ){
+                nextChar();
+                if(Character.toString(peek).equals("=")){
+                    lexema.append(peek);
+                    nextChar();
+                }
+            }
+            else{
+                nextChar();
+            }
+
+            token = "<OP, " + lexema.toString() + ">";
+
+            return token;
+        }
+
         token = String.valueOf(peek);
         return token;
     }
